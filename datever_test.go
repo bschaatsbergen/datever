@@ -1,8 +1,9 @@
-package datever
+package datever_test
 
 import (
 	"testing"
 
+	"github.com/bschaatsbergen/datever"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -10,16 +11,16 @@ import (
 func TestParseVersion(t *testing.T) {
 	tests := []struct {
 		input    string
-		expected *Version
+		expected *datever.Version
 		err      bool
 	}{
-		{"v2024.6.15", &Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, false},
-		{"v2024.12.31", &Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, false},
-		{"v2024.2.1-1", &Version{Year: 2024, Month: 2, Day: 1, Patch: "1"}, false},
-		{"v2024.1.1-alpha", &Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, false},
-		{"v2024.2.1-alpha001", &Version{Year: 2024, Month: 2, Day: 1, Patch: "alpha001"}, false},
-		{"v2024.2.1-rc1", &Version{Year: 2024, Month: 2, Day: 1, Patch: "rc1"}, false},
-		{"v2024.1.1-beta", &Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, false},
+		{"v2024.6.15", &datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, false},
+		{"v2024.12.31", &datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, false},
+		{"v2024.2.1-1", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "1"}, false},
+		{"v2024.1.1-alpha", &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, false},
+		{"v2024.2.1-alpha001", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "alpha001"}, false},
+		{"v2024.2.1-rc1", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "rc1"}, false},
+		{"v2024.1.1-beta", &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, false},
 		{"v2024.13.1", nil, true},  // Invalid month
 		{"v2024.6.15-", nil, true}, // Invalid format
 		{"v2024.6", nil, true},     // Invalid format
@@ -27,7 +28,7 @@ func TestParseVersion(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := ParseVersion(test.input)
+		result, err := datever.ParseVersion(test.input)
 		if test.err {
 			require.Error(t, err)
 		} else {
@@ -39,15 +40,15 @@ func TestParseVersion(t *testing.T) {
 
 func TestString(t *testing.T) {
 	tests := []struct {
-		version  *Version
+		version  *datever.Version
 		expected string
 	}{
-		{&Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, "v2024.6.15"},
-		{&Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, "v2024.12.31"},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, "v2024.1.1-alpha"},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}, "v2024.1.1-alpha001"},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, "v2024.1.1-beta"},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "rc1"}, "v2024.1.1-rc1"},
+		{&datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, "v2024.6.15"},
+		{&datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, "v2024.12.31"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, "v2024.1.1-alpha"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}, "v2024.1.1-alpha001"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, "v2024.1.1-beta"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "rc1"}, "v2024.1.1-rc1"},
 	}
 
 	for _, test := range tests {
@@ -57,14 +58,14 @@ func TestString(t *testing.T) {
 }
 
 func TestCompare(t *testing.T) {
-	v1 := &Version{Year: 2024, Month: 6, Day: 15, Patch: ""}
-	v2 := &Version{Year: 2024, Month: 12, Day: 31, Patch: ""}
-	v3 := &Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}
-	v4 := &Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}
-	v5 := &Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}
+	v1 := &datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}
+	v2 := &datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}
+	v3 := &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}
+	v4 := &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}
+	v5 := &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}
 
 	tests := []struct {
-		v1, v2   *Version
+		v1, v2   *datever.Version
 		expected int
 	}{
 		{v1, v2, -1},
@@ -82,17 +83,17 @@ func TestCompare(t *testing.T) {
 
 func TestIsValid(t *testing.T) {
 	tests := []struct {
-		version  *Version
+		version  *datever.Version
 		expected bool
 	}{
-		{&Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, true},
-		{&Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, true},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "1"}, true},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "rc1"}, true},
-		{&Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}, true},
-		{&Version{Year: 2024, Month: 13, Day: 15, Patch: ""}, false}, // Invalid month
-		{&Version{Year: 2024, Month: 0, Day: 15, Patch: ""}, false},  // Invalid month
-		{&Version{Year: 2024, Month: 6, Day: 0, Patch: ""}, false},   // Invalid day
+		{&datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, true},
+		{&datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, true},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "1"}, true},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "rc1"}, true},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}, true},
+		{&datever.Version{Year: 2024, Month: 13, Day: 15, Patch: ""}, false}, // Invalid month
+		{&datever.Version{Year: 2024, Month: 0, Day: 15, Patch: ""}, false},  // Invalid month
+		{&datever.Version{Year: 2024, Month: 6, Day: 0, Patch: ""}, false},   // Invalid day
 	}
 
 	for _, test := range tests {
