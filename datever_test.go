@@ -14,17 +14,17 @@ func TestParseVersion(t *testing.T) {
 		expected *datever.Version
 		err      bool
 	}{
-		{"v2024.6.15", &datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, false},
-		{"v2024.12.31", &datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, false},
-		{"v2024.2.1-1", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "1"}, false},
-		{"v2024.1.1-alpha", &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, false},
-		{"v2024.2.1-alpha001", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "alpha001"}, false},
-		{"v2024.2.1-rc1", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "rc1"}, false},
-		{"v2024.1.1-beta", &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, false},
-		{"v2024.13.1", nil, true},  // Invalid month
-		{"v2024.6.15-", nil, true}, // Invalid format
-		{"v2024.6", nil, true},     // Invalid format
-		{"v2024.6.1a", nil, true},  // Invalid day format
+		{"2024.6.15", &datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, false},
+		{"2024.12.31", &datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, false},
+		{"2024.2.1-1", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "1"}, false},
+		{"2024.1.1-alpha", &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, false},
+		{"2024.2.1-alpha001", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "alpha001"}, false},
+		{"2024.2.1-rc1", &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "rc1"}, false},
+		{"2024.1.1-beta", &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, false},
+		{"2024.13.1", nil, true},  // Invalid month
+		{"2024.6.15-", nil, true}, // Invalid format
+		{"2024.6", nil, true},     // Invalid format
+		{"2024.6.1a", nil, true},  // Invalid day format
 	}
 
 	for _, test := range tests {
@@ -43,12 +43,12 @@ func TestString(t *testing.T) {
 		version  *datever.Version
 		expected string
 	}{
-		{&datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, "v2024.6.15"},
-		{&datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, "v2024.12.31"},
-		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, "v2024.1.1-alpha"},
-		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}, "v2024.1.1-alpha001"},
-		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, "v2024.1.1-beta"},
-		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "rc1"}, "v2024.1.1-rc1"},
+		{&datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}, "2024.6.15"},
+		{&datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}, "2024.12.31"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha"}, "2024.1.1-alpha"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}, "2024.1.1-alpha001"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}, "2024.1.1-beta"},
+		{&datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "rc1"}, "2024.1.1-rc1"},
 	}
 
 	for _, test := range tests {

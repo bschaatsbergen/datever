@@ -7,10 +7,10 @@ DateVer is a library to define, compare and validate date ranges while adhering 
 
 ## Example DateVer versions
 
-* v2024.1.1
-* v2024.1.2-1
-* v2024.2.1-rc1
-* v2024.2.1-alpha001
+* 2024.1.1
+* 2024.1.2-1
+* 2024.2.1-rc1
+* 2024.2.1-alpha001
 
 ## Why DateVer?
 Many projects use semantic versioning to manage their releases. However, the version number does not provide any information about the release date. DateVer combines the release date with semantic versioning to provide more context about the release.
@@ -23,13 +23,13 @@ This section details how to use `datever`.
 
 ```go
 version := &datever.Version{Year: 2024, Month: 2, Day: 1, Patch: "alpha001"}
-fmt.Println(version.String()) // Output: v2024.2.1-alpha001
+fmt.Println(version.String()) // Output: 2024.2.1-alpha001
 ```
 
 ### Parsing a DateVer version
 
 ```go
-version, err := datever.ParseVersion("v2024.1.1-rc1")
+version, err := datever.ParseVersion("2024.1.1-rc1")
 ```
 
 ### Using a Version struct

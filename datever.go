@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"regexp"
 	"strconv"
-	"time"
 )
 
 // Version represents a date-based version with an optional patch.
@@ -16,11 +15,12 @@ type Version struct {
 
 // ParseVersion parses a version string into a Version struct.
 // Supported formats are:
-// * vYYYY.MM.DD
-// * vYYYY.MM.DD-PATCH
+// * YYYY.M.D
+// * YYYY.M.D-PATCH
 // where PATCH can be any alphanumeric string.
 func ParseVersion(version string) (*Version, error) {
-	pattern := `^v(\d{4})\.(\d{2})\.(\d{2})(?:-([a-zA-Z0-9]+))?$`
+	// Regex pattern to match versions
+	pattern := `^(\d{4})\.(\d{1,2})\.(\d{1,2})(?:-([a-zA-Z0-9]+))?$`
 	re := regexp.MustCompile(pattern)
 	matches := re.FindStringSubmatch(version)
 
@@ -60,14 +60,12 @@ func ParseVersion(version string) (*Version, error) {
 // String returns the string representation of the Version.
 func (v *Version) String() string {
 	if v.Patch != "" {
-		return fmt.Sprintf("v%4d.%2d.%2d-%s", v.Year, v.Month, v.Day, v.Patch)
+		return fmt.Sprintf("%d.%d.%d-%s", v.Year, v.Month, v.Day, v.Patch)
 	}
-	return fmt.Sprintf("v%4d.%2d.%2d", v.Year, v.Month, v.Day)
+	return fmt.Sprintf("%d.%d.%d", v.Year, v.Month, v.Day)
 }
 
 // IsValid checks if the Version is valid.
 func (v *Version) IsValid() bool {
-	dateStr := fmt.Sprintf("%4d-%2d-%2d", v.Year, v.Month, v.Day)
-	_, err := time.Parse("2006-01-02", dateStr)
-	return err == nil
+	return v.Year > 0 && v.Month > 0 && v.Month <= 12 && v.Day > 0 && v.Day <= 31
 }
