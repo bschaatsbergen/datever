@@ -1,5 +1,8 @@
 # DateVer [![Godoc](https://godoc.org/github.com/bschaatsbergen/datever?status.svg)](https://godoc.org/github.com/bschaatsbergen/datever) ![GitHub Release](https://img.shields.io/github/v/release/bschaatsbergen/datever)
 
+> [!CAUTION]
+> This package is still experimental and the API may change in the future.
+
 DateVer is a library to define, compare and validate date ranges while adhering to [semantic versioning](https://semver.org/). DateVer versions consist of a year, month, day, and an optional patch. The patch can be used to indicate pre-release versions, such as alpha, beta, or release candidates. DateVer helps to provide a clear chronological view of your software's evolution.
 
 ## Example DateVer versions
