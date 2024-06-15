@@ -57,30 +57,6 @@ func TestString(t *testing.T) {
 	}
 }
 
-func TestCompare(t *testing.T) {
-	v1 := &datever.Version{Year: 2024, Month: 6, Day: 15, Patch: ""}
-	v2 := &datever.Version{Year: 2024, Month: 12, Day: 31, Patch: ""}
-	v3 := &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}
-	v4 := &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "beta"}
-	v5 := &datever.Version{Year: 2024, Month: 1, Day: 1, Patch: "alpha001"}
-
-	tests := []struct {
-		v1, v2   *datever.Version
-		expected int
-	}{
-		{v1, v2, -1},
-		{v2, v1, 1},
-		{v3, v4, -1},
-		{v4, v3, 1},
-		{v3, v5, 0},
-	}
-
-	for _, test := range tests {
-		result := test.v1.Compare(test.v2)
-		assert.Equal(t, test.expected, result)
-	}
-}
-
 func TestIsValid(t *testing.T) {
 	tests := []struct {
 		version  *datever.Version

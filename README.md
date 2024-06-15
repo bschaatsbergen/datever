@@ -33,5 +33,4 @@ version, err := datever.ParseVersion("v2024.1.1-rc1")
 Once you have a `datever.Version` struct, you can access its components (year, month, day, patch) and use the provided methods:
 
 * `String()`: Returns the string representation of the version.
-* `Compare(other *Version)`: Compares the current version with another datever.Version and returns -1, 0, or 1 based on comparison.
 * `IsValid()`: Checks if the date components of the version are valid (year > 0, month within 1-12, day within 1-31).
